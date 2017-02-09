@@ -1,5 +1,6 @@
 package study.java.chapter4;
 
+import java.util.Arrays;
 
 /**
  * Created by peterwang on 2017/2/1.
@@ -7,43 +8,29 @@ package study.java.chapter4;
 public class Test {
     public static void main(String[] args) {
 
-        System.out.println("========= Test 1 ==========");
+        Test t = new Test();
 
-        Test1 test1 = new Test1();
-        test1.Fibonacci(10);
 
-        System.out.println("========= Poker ==========");
+        __iamline__("Fibonacci");
+
+        System.out.println(Arrays.toString(t.fibonacci(10 )));
+
+
+        __iamline__("New Poker");
 
         Poker poker = new Poker();
-        int takeCount = 0;
-        String[] takeCards = new String[13];
 
         String[] cards = poker.getNewPoker();
-        for(String card : cards){
-            takeCards[takeCount] = card;
-            if(takeCount == 12){
-                System.out.println(String.join(" ", takeCards));
-                takeCount = 0;
-            }else{
-                takeCount++;
-            }
 
-        }
+        String[][] newPoker = poker.licensing(cards,4);
+        poker.printPoker(newPoker);
 
-        System.out.println("=========");
+        __iamline__("Shuffle Poker");
 
-        String[] shuffleCards = poker.shuffle();
-        for(String card : shuffleCards){
-            takeCards[takeCount] = card;
-            if(takeCount == 12){
-                System.out.println(String.join(" ", takeCards));
-                takeCount = 0;
-            }else{
-                takeCount++;
-            }
-        }
+        String[][] shufflePoker = poker.shuffle(cards,4);
+        poker.printPoker(shufflePoker);
 
-        System.out.println("========= Bobble sort ==========");
+        __iamline__("Bobble sort");
 
         BubbleSort bubblesort = new BubbleSort();
         int[] bubbles = bubblesort.getBubble();
@@ -53,14 +40,36 @@ public class Test {
         bubbles = bubblesort.sortAsc();
         System.out.println(String.join(" ", bubblesort.getList(bubbles , ",")));
 
-
-        System.out.println("========= Get array index ==========");
-
-        System.out.println("Where is 60 index ?");
+        __iamline__("Where is 60 index ?");
         System.out.println(bubblesort.findIndex(60));
 
-        System.out.println("Where is 90 index ?");
+        __iamline__("Where is 90 index ?");
         System.out.println(bubblesort.findIndex(90));
 
     }
+
+    public static void __iamline__(String msg){
+        System.out.println("\n========= "+ msg +" ==========\n");
+    }
+
+    public static int[] fibonacci(int months ){
+        // S:小兔 , B:大兔
+        int S = 0, B = 0, STmp = 0, BTmp = 0;
+        int[] F = new int[months];
+
+        for (int i = 0 ; i < months ; i++) {
+
+            // 計算該月所有總和
+            F[i] = S + B;
+
+            // 計算下月大小兔各別數量
+            STmp = (i == 0)?1:B;
+            BTmp = S + B;
+            S = STmp;
+            B = BTmp;
+        }
+
+        return F;
+    }
+
 }
