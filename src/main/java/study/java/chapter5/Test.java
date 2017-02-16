@@ -13,7 +13,7 @@ public class Test {
         int[][] maze = {{2,2,2,2,2,2,2},
                         {0,0,0,0,0,0,2},
                         {2,0,2,0,2,0,2},
-                        {2,0,0,2,0,2,2},
+                        {2,0,0,0,0,2,2},
                         {2,2,0,2,0,2,2},
                         {2,0,0,0,0,0,2},
                         {2,2,2,2,2,0,2}};
@@ -28,7 +28,7 @@ public class Test {
 
 
         road = road +"["+x+","+y+"]";
-        //System.out.println(road);
+        System.out.println(road);
         if ( x == 6 && y == 5 ){
             System.out.println(road);
 
