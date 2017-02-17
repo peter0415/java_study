@@ -16,7 +16,10 @@ public class HanoiTest {
         int n = 3;
 
         Hanoi hanoi = new Hanoi();
-        ArrayList game = hanoi.solve(n);
+        ArrayList<Hanoi.Move> game = hanoi.solve(n);
+        game.forEach(move -> {
+            System.out.println(move);
+        });
 
         double chkNumber = Math.pow(2 , n)-1;
 

@@ -14,7 +14,7 @@ public class Queen {
     private int squareWidth;
 
     public static void main(String[] args) {
-        Queen queen = new Queen(10);
+        Queen queen = new Queen(5);
         queen.space();
         queen.printMap();
     }

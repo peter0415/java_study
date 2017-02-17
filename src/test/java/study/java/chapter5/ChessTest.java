@@ -21,7 +21,7 @@ public class ChessTest {
         // 取得騎士步數記錄
         ArrayList knightLog = chess.play(newBoard , startPoint , knight);
 
-        // 判斷 knightLog.size 是否等於 1+2+...+64 的和
+        // 判斷 knightLog.size 是否等於 64
     }
 
 }

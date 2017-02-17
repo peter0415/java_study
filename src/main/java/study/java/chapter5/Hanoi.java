@@ -7,11 +7,20 @@ import java.util.ArrayList;
  */
 public class Hanoi {
     public class Move {
-        public String from, to;
+        public String from, to, xxx;
 
         public Move(String from, String to) {
             this.from = from;
             this.to = to;
+        }
+
+        @Override
+        public String toString() {
+            return "Move{" +
+                    "from='" + from + '\'' +
+                    ", to='" + to + '\'' +
+                    ", xxx='" + xxx + '\'' +
+                    '}';
         }
     }
 

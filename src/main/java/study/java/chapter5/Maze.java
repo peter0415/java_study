@@ -14,7 +14,7 @@ public class Maze {
     public static void main(String[] args) {
         Maze maze = new Maze();
         System.out.println("迷宮地圖");
-        Run randomMaze = maze.randomMap(5,5);
+        Play randomMaze = maze.randomMap(5,5);
         randomMaze.printMaze();
 
         System.out.println("出口座標");
@@ -25,10 +25,11 @@ public class Maze {
 
     }
 
-    public Run randomMap(int row, int column){
+    public Play randomMap(int row, int column){
 
         int[][] map = new int[row][column];
         Random rand = new Random();
+
 
         for (int i = 0; i < row; i++){
             for(int j = 0; j < column; j++){
@@ -47,23 +48,31 @@ public class Maze {
 
     }
 
-    public Run loadMap(int[][] map){
-        return new Run(map);
+    public Play loadMap(int[][] map){
+        return new Play(map);
+    }
+
+    public Play loadMap(int[][] map , int[] entrance  , int[] escape){
+        return new Play(map , entrance  , escape);
     }
 
 
-    public class Run {
+    public class Play {
 
         private int row;
         private int column;
         private int[][] map;
-        private int[] entrance = {0,1};
-        private int[] escape;
+        public ArrayList chkMap;
+        private int[] entrance;
+        public int[] escape;
 
-        public Run(int[][] map) {
+        public Play(int[][] map) {
             this.map = map;
-            this.setRow(map.length);
-            this.setColumn(map[0].length);
+            this.setRow(this.map.length);
+            this.setColumn(this.map[0].length);
+
+            // 入口座標
+            this.entrance = new int[] {0,1};
 
             // 出口座標
             this.escape = new int[] { this.getRow() - 1 , getColumn() - 2 };
@@ -73,23 +82,29 @@ public class Maze {
             this.map[this.entrance[0] + 1][this.entrance[1]] = 0;
             this.map[this.escape[0] - 1][this.escape[1]] = 0;
             this.map[this.escape[0]][this.escape[1]] = 0;
+
         }
 
+        public Play(int[][] map , int[] entrance , int[] escape ) {
+            this.map = map;
+            this.setRow(this.map.length);
+            this.setColumn(this.map[0].length);
+
+            // 入口座標
+            this.entrance = entrance;
+
+            // 出口座標
+            this.escape = escape;
+
+        }
+
+
         public void startTrace(){
-
             ArrayList road = new ArrayList();
-
-            ArrayList traceRoad = this.trace(road,0, this.entrance[0], this.entrance[1], this.map);
-
-            for (int i = 0; i < traceRoad.size() ; i++) {
-                //System.out.println(road.get(i));
-            }
+            this.trace(road,0, this.entrance[0], this.entrance[1], this.map);
         }
 
         private ArrayList trace(ArrayList road , int step , int r, int c ,int[][] map){
-
-
-
 
             if ( r < 0 || r > (getRow() - 1 ) || c < 0 || c > (this.getColumn() - 1 ) ){
                 return road;
@@ -98,7 +113,6 @@ public class Maze {
             if ( map[r][c] == 2 || map[r][c] == 6 ){
                 return road;
             }
-
 
             ArrayList point = new ArrayList();
             point.add(r);
@@ -111,12 +125,18 @@ public class Maze {
 
                 map[r][c]=6;
 
-                for(int[] m : map){
-                    System.out.println(Arrays.toString(m));
+                this.chkMap = new ArrayList();
+                for (int i = 0; i < map.length; i++) {
+                    System.out.println(Arrays.toString(map[i]));
+                    for (int j = 0; j < map[i].length; j++) {
+                        if(map[i][j] == 6){
+                            this.chkMap.add(new int[]{i,j});
+                        }
+                    }
                 }
 
-                map[r][c]=0;
 
+                map[r][c]=0;
                 return road;
             }
 
@@ -138,9 +158,19 @@ public class Maze {
             }
             road = roadTmp;
 
-            //road = this.trace(road ,step, r ,c-1 , map); // 左
-            //road = this.trace(road ,step,r-1 , c , map); // 上
+            /*
+            map[r][c] = 6;
+            roadTmp = this.trace(road ,step, r ,c-1 , map); // 左
+            if(this.twoRoadCheck(road,roadTmp)){
+                map[r][c] = 0;
+            }
 
+            map[r][c] = 6;
+            roadTmp = this.trace(road ,step,r-1 , c , map); // 上
+            if(this.twoRoadCheck(road,roadTmp)){
+                map[r][c] = 0;
+            }
+            */
             return road;
 
         }
@@ -174,6 +204,10 @@ public class Maze {
 
         public void setColumn(int column) {
             this.column = column;
+        }
+
+        public void setEntrance(int r , int c){
+            this.entrance = new int[]{r, c};
         }
     }
 }

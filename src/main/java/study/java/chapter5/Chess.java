@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Chess {
 
     public Chess() {
-        this.knightGo();
+        //this.knightGo();
     }
 
 
